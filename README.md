@@ -1,4 +1,4 @@
-# datahack-il
+# GitHub StackOverflow Correlator
 This code was created as part of DataHack 2015.   
 The code tries to find correlations between Stack Overflow posts and GitHub repositories.   
 It uses Google cloud service in order to query GitHub, and a downloaded version of stack overflow posts. 
