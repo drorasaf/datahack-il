@@ -2,8 +2,11 @@
 import os
 import zipfile
 import wget
+import fnmatch
 from apiclient.discovery import build
 from oauth2client.client import GoogleCredentials
+
+extensions = {'Python': '.py', 'Java': '.java'}
 
 credentials = GoogleCredentials.get_application_default()
 pro = "positive-notch-114016"
@@ -19,12 +22,12 @@ def rep_exists(url):
          return True
     return False
 
-def filter_by_extension(dirname, language):
+def filter_by_extension(dirname, ext):
     """ Get a directory and list all files with a specified extension """
-    # TODO: actual filter by extension
     curr_file_list = []    
     for root, dirs, filenames in os.walk(dirname):
-	curr_file_list.extend(filenames)
+	for filename in fnmatch.filter(filenames, "*" + ext):	
+	    curr_file_list.append(filename)
 
     return curr_file_list
 
@@ -39,7 +42,7 @@ def github_get_repositories(language):
         returns list of file list filtered by extension related to their language
     """
     files = []
-    get_zip_file_ext = '-master.zip'
+    get_zip_file_ext = '/archive/master.zip'
     query = 'SELECT repository_url FROM [githubarchive:year.2014] WHERE' \
 	    ' repository_size > 64 AND repository_watchers > 1000 AND' \
             ' public=True AND repository_has_downloads=True LIMIT 10;'
@@ -58,7 +61,7 @@ def github_get_repositories(language):
 		    continue
 	    suffix = rep_url.split('/')
             name = suffix[-1] + '-master'
-            files.append(filter_by_extension(name, language))
+            files.append(filter_by_extension(name, extensions[language]))
 
     return files
 
