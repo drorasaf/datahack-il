@@ -9,15 +9,15 @@
 #norm2 = normalize(x[:,np.newaxis], axis=0).ravel() \
 #print np.all(norm1 == norm2)"
 
-sample = " cdf = list(cumsum(p))\
-normal = cdf[-1] \
-cdf2 = [float(i) / float(normal) for i in cdf] \
-uniform_sample = random_sample() \
+sample = " cdf = list(cumsum(p))\n\
+normal = cdf[-1]\n \
+cdf2 = [float(i) / float(normal) for i in cdf]\n \
+uniform_sample = random_sample()\n \
 idx = bisect.bisect_right(cdf2, uniform_sample)"
 
  
 def code_snippet_get_language(code_snippet):
-   return 'Python'
+   return 'Java'
 
 def so_get_code(answer):
    # TODO: find <code> </code> the internal is the actual code

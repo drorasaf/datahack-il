@@ -4,7 +4,7 @@ from stack_overflow import so_get_code, so_get_interesting_answers, code_snippet
 from rank_code import rank_code_snippet_in_rep
 
 # TODO: configure get_repositories using more parameters
-popular_languages = ['Python', 'Java']
+popular_languages = ['Java']
 
 if __name__ == '__main__':
    code_list = []
@@ -21,8 +21,9 @@ if __name__ == '__main__':
 
    for code_snippet in code_list:
 	language = code_snippet_get_language(code_snippet)
-	for rep in hub[language]:
-            rank_list.append((code_snippet, rank_code_snippet_in_rep(rep, code_snippet)))
+	#for rep in hub[language]:
+         #   rank_list.append((code_snippet, rep, rank_code_snippet_in_rep(rep, code_snippet)))
+        rank_list.append((code_snippet, '*', rank_code_snippet_in_rep(hub[language][0], code_snippet)))
 
-   print (rank_list)
-
+   for r in rank_list:
+       print (r[2])

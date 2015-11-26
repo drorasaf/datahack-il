@@ -6,7 +6,8 @@ import fnmatch
 from apiclient.discovery import build
 from oauth2client.client import GoogleCredentials
 
-extensions = {'Python': '.py', 'Java': '.java'}
+#TODO: FIXME WHEN DONE
+extensions = {'Java': '.py'}
 
 credentials = GoogleCredentials.get_application_default()
 pro = "positive-notch-114016"
@@ -28,15 +29,15 @@ def filter_by_extension(dirname, ext):
     curr_file_list = []    
     for root, dirs, filenames in os.walk(dirname):
 	for filename in fnmatch.filter(filenames, "*" + ext):	
-	    curr_file_list.append(filename)
+	    curr_file_list.append(os.path.join(root, filename))
 
     return curr_file_list
 
 
 def github_get_repositories(language):
     """ Get git hub repositories according to specified language and the following filters:
-        1. repository_size
-	2. repository_watchers
+        1. repository_size < 160K <10M
+	2. repository_watchers > 1000
 	3. public
         4. repository_has_downloads
         5. number of forks?
