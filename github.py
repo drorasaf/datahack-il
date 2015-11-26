@@ -45,8 +45,8 @@ def github_get_repositories(language):
     files = []
     get_zip_file_ext = '/archive/master.zip'
     query = 'SELECT repository_url FROM [githubarchive:year.2014] WHERE' \
-	    ' repository_size > 160000 AND repository_watchers > 1000 AND' \
-            ' public=True AND repository_has_downloads=True ORDER BY repository_watchers LIMIT 1000;'
+	    ' repository_size > 160 AND repository_size < 10000 AND repository_watchers > 1000 AND' \
+            ' public=True AND repository_has_downloads=True ORDER BY repository_watchers LIMIT 10;'
     res = run_query(query)
 
     for row in res['rows']:
@@ -58,10 +58,10 @@ def github_get_repositories(language):
                     with zipfile.ZipFile(filename) as zf:
 			zf.extractall()
 		except zipfile.BadZipfile:
-                    os.remove(filename)
 		    continue
 	    suffix = rep_url.split('/')
             name = suffix[-1] + '-master'
+	    name ='faker-master'
             files.append(filter_by_extension(name, extensions[language]))
 
     return files

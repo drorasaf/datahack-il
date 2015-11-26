@@ -1,13 +1,21 @@
 # -*- coding: utf-8 -*-
 
-sample = "import numpy as np \
-from sklearn.preprocessing import normalize \
-\
-x = np.random.rand(1000)*10 \
-norm1 = x / np.linalg.norm(x) \
-norm2 = normalize(x[:,np.newaxis], axis=0).ravel() \
-print np.all(norm1 == norm2)"
+#sample = "import numpy as np \
+#from sklearn.preprocessing import normalize \
+#\
 
+#x = np.random.rand(1000)*10 \
+#norm1 = x / np.linalg.norm(x) \
+#norm2 = normalize(x[:,np.newaxis], axis=0).ravel() \
+#print np.all(norm1 == norm2)"
+
+sample = " cdf = list(cumsum(p))\
+normal = cdf[-1] \
+cdf2 = [float(i) / float(normal) for i in cdf] \
+uniform_sample = random_sample() \
+idx = bisect.bisect_right(cdf2, uniform_sample)"
+
+ 
 def code_snippet_get_language(code_snippet):
    return 'Python'
 
