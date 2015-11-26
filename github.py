@@ -22,6 +22,7 @@ def rep_exists(url):
          return True
     return False
 
+
 def filter_by_extension(dirname, ext):
     """ Get a directory and list all files with a specified extension """
     curr_file_list = []    
@@ -44,8 +45,8 @@ def github_get_repositories(language):
     files = []
     get_zip_file_ext = '/archive/master.zip'
     query = 'SELECT repository_url FROM [githubarchive:year.2014] WHERE' \
-	    ' repository_size > 64 AND repository_watchers > 1000 AND' \
-            ' public=True AND repository_has_downloads=True LIMIT 10;'
+	    ' repository_size > 160000 AND repository_watchers > 1000 AND' \
+            ' public=True AND repository_has_downloads=True ORDER BY repository_watchers LIMIT 1000;'
     res = run_query(query)
 
     for row in res['rows']:
