@@ -7,5 +7,5 @@ def so_get_code(answer):
 def so_get_interesting_answers():
    # TODO: load so data and cut it down to interesting ones
    # TODO: define filter
-
+   pass
 

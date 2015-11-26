@@ -9,9 +9,10 @@ popular_languages = ['Python', 'Java']
 if __name__ == '__main__':
    code_list = []
    rank_list = []
+   hub = {}
 
    for l in popular_languages:
-       hub[l] = git_hub_get_repositories(l)
+       hub[l] = github_get_repositories(l)
 
     # TODO: define filters, define amount of answers to get
    answers = so_get_interesting_answers()

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import os
+import zipfile
+import wget
 from apiclient.discovery import build
 from oauth2client.client import GoogleCredentials
 
@@ -8,34 +11,66 @@ pro = "positive-notch-114016"
 bigquery_service = build('bigquery', 'v2', credentials=credentials)
 query_req = bigquery_service.jobs()
 
+def rep_exists(url):
+    """ verifies that the zipfile of the repo exists  """
+    suffix = url.split('/')
+    zip_filename = suffix[-1] + '-master.zip'
+    if os.path.isfile(zip_filename):
+         return True
+    return False
 
-def git_hub_get_repositories(language):
+def filter_by_extension(dirname, language):
+    """ Get a directory and list all files with a specified extension """
+    # TODO: actual filter by extension
+    curr_file_list = []    
+    for root, dirs, filenames in os.walk(dirname):
+	curr_file_list.extend(filenames)
+
+    return curr_file_list
+
+
+def github_get_repositories(language):
     """ Get git hub repositories according to specified language and the following filters:
         1. repository_size
 	2. repository_watchers
 	3. public
         4. repository_has_downloads
         5. number of forks?
+        returns list of file list filtered by extension related to their language
     """
-    query = 'SELECT repository_url'
-     run_query(query)
+    files = []
+    get_zip_file_ext = '-master.zip'
+    query = 'SELECT repository_url FROM [githubarchive:year.2014] WHERE' \
+	    ' repository_size > 64 AND repository_watchers > 1000 AND' \
+            ' public=True AND repository_has_downloads=True LIMIT 10;'
+    res = run_query(query)
+
+    for row in res['rows']:
+        if all(f['v'] for f in row['f']):
+	    rep_url = row['f'][0]['v']
+	    if not rep_exists(rep_url):
+		filename = wget.download(rep_url + get_zip_file_ext)
+                try:
+                    with zipfile.ZipFile(filename) as zf:
+			zf.extractall()
+		except zipfile.BadZipfile:
+                    os.remove(filename)
+		    continue
+	    suffix = rep_url.split('/')
+            name = suffix[-1] + '-master'
+            files.append(filter_by_extension(name, language))
+
+    return files
 
 
 def run_query(query):
+    """ executes arbitrary query in google big query """
     query_data = {
     'query': (
-	#'SELECT repository_language FROM [githubarchive:year.2014] LIMIT 1000;'
 	query
         )
     }
 
     q = query_req.query(projectId=pro, body=query_data)
-    query_resp = q.execute()
-
-    print('Query Results:')
-    for row in query_resp['rows']:
-        if all(f['v'] for f in row['f']):
-    	    print('\t'.join(field['v'] for field in row['f']))
-
-    return query_resp
+    return q.execute()
 
