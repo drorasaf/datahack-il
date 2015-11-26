@@ -21,7 +21,8 @@ if __name__ == '__main__':
 
    for code_snippet in code_list:
 	language = code_snippet_get_language(code_snippet)
-        rank_list.append((code_snippet, rank_code_snippet_in_rep(hub[language], code_snippet)))
+	for rep in hub[language]:
+            rank_list.append((code_snippet, rank_code_snippet_in_rep(rep, code_snippet)))
 
    print (rank_list)
 
