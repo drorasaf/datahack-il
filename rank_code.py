@@ -27,15 +27,15 @@ def rank_code_snippet_in_rep(code_rep, code_snippet):
 #	            continue
 
 	    if max_match_ratio>70:
-	        print(snippet_code_line)
-	        print(match)
-	        print(max_match_ratio)
+	        # print(snippet_code_line)
+	        # print(match)
+	        # print(max_match_ratio)
 	        prev_match_ix = max_match_ix
 	        ratio_accumulator += 1
-		print(ratio_accumulator)
+		# print(ratio_accumulator)
 	    snippet_counter += 1
-	if ratio_accumulator>0:
-            print('meow {0} {1}'.format(ratio_accumulator, snippet_counter))
+	# if ratio_accumulator>0:
+        #     print('meow {0} {1}'.format(ratio_accumulator, snippet_counter))
 	matched_weight = float(ratio_accumulator) / float(snippet_counter)
 
         if matched_weight > 0.6:
