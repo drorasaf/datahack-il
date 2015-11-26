@@ -22,7 +22,8 @@ if __name__ == '__main__':
    for code_snippet in code_list:
 	language = code_snippet_get_language(code_snippet)
 	for rep in hub[language]:
-            rank_list.append((code_snippet, rep, rank_code_snippet_in_rep(rep, code_snippet)))
+#            if 'spark-master' in rep[0]:
+	    rank_list.append((code_snippet, rep, rank_code_snippet_in_rep(rep, code_snippet)))
 
    for r in rank_list:
        print (r[2])
