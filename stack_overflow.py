@@ -4,18 +4,15 @@
 #from sklearn.preprocessing import normalize \
 #\
 
-#x = np.random.rand(1000)*10 \
-#norm1 = x / np.linalg.norm(x) \
-#norm2 = normalize(x[:,np.newaxis], axis=0).ravel() \
-#print np.all(norm1 == norm2)"
+sample ="protected void changeMatch(RouteMatch match) {\n\
+List<String> requestList = SparkUtils.convertRouteToList(match.getRequestURI());\n\
+List<String> matchedList = SparkUtils.convertRouteToList(match.getMatchUri());\n\
+\n\
+params = getParams(requestList, matchedList);\n\
+splat = getSplat(requestList, matchedList);\n\
+}"
 
-sample = " cdf = list(cumsum(p))\n\
-normal = cdf[-1]\n \
-cdf2 = [float(i) / float(normal) for i in cdf]\n \
-uniform_sample = random_sample()\n \
-idx = bisect.bisect_right(cdf2, uniform_sample)"
 
- 
 def code_snippet_get_language(code_snippet):
    return 'Java'
 

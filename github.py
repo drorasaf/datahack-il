@@ -6,8 +6,7 @@ import fnmatch
 from apiclient.discovery import build
 from oauth2client.client import GoogleCredentials
 
-#TODO: FIXME WHEN DONE
-extensions = {'Java': '.py'}
+extensions = {'Java': '.java'}
 
 credentials = GoogleCredentials.get_application_default()
 pro = "positive-notch-114016"
@@ -47,7 +46,7 @@ def github_get_repositories(language):
     get_zip_file_ext = '/archive/master.zip'
     query = 'SELECT repository_url FROM [githubarchive:year.2014] WHERE' \
 	    ' repository_size > 160 AND repository_size < 10000 AND repository_watchers > 1000 AND' \
-            ' public=True AND repository_has_downloads=True ORDER BY repository_watchers LIMIT 10;'
+            ' public=True AND repository_has_downloads=True AND repository_language="Java" ORDER BY repository_watchers LIMIT 50;'
     res = run_query(query)
 
     for row in res['rows']:
@@ -62,7 +61,6 @@ def github_get_repositories(language):
 		    continue
 	    suffix = rep_url.split('/')
             name = suffix[-1] + '-master'
-	    name ='faker-master'
             files.append(filter_by_extension(name, extensions[language]))
 
     return files
