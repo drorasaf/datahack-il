@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from github import github_get_repositories
-from stack_overflow import so_get_code, so_get_interesting_answers
+from stack_overflow import so_get_code, so_get_interesting_answers, code_snippet_get_language
 from rank_code import rank_code_snippet_in_rep
 
 # TODO: configure get_repositories using more parameters
@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
    for code_snippet in code_list:
 	language = code_snippet_get_language(code_snippet)
-        rank_list.append(code_snippet, rank_code_snippet_in_rep(hub[l], code_snippet))
+        rank_list.append((code_snippet, rank_code_snippet_in_rep(hub[l], code_snippet)))
 
    print (rank_list)
 
